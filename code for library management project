@@ -1,0 +1,76 @@
+import time
+def new(book_name):
+    with open("mylibrary2.txt") as fr:
+        lines = fr.readlines()
+    with open("mylibrary.txt","w") as fw:
+        for line in lines:
+            if line.strip('\n') != book_name:
+                fw.write(line)
+
+
+
+def display_books():
+    print("The books available in the library are:\n")
+    file=open("mylibrary.txt")
+    s=file.read()
+    print(s)
+    file.close()
+    
+def add_book():
+    name=input("Enter the name of the book:\n")
+    file1=open("mylibrary.txt","a")
+    file1.write("\n"+name)
+    file1.close()
+    print("Book added sucessfully in the library!!")
+
+def issue_book():
+    n=input("For issuing the book, Enter your name:\n")
+    book=input("Enter the name of the book:\n")
+    localtime=time.asctime(time.localtime(time.time()))
+    lin=f"{n}::{book}::{localtime}"
+    file2=open("issuebook.txt","a")
+    file2.writelines("\n"+lin)
+    file2.close()
+    with open("issuebook.txt") as fk:
+        a=fk.read()
+        print(a)
+    f1=open("mylibrary.txt")
+    con=f1.read()
+    f1.close()
+    f2=open("mylibrary2.txt","w")
+    f2.write(con)
+    f2.close()
+    new(book)
+    print("Book sucessfully issued!!")
+    
+
+def return_book():
+    n=input("For returning the book, Enter your name:\n")
+    bookn=input("Enter the name of the book you want to return:\n")
+    localtime=time.asctime(time.localtime(time.time()))
+    lin=f"{n}::{bookn}::{localtime}"
+    with open("mylibrary.txt","a") as f3:
+        f3.write("\n"+bookn)
+    file2=open("returnbook.txt","a")
+    file2.writelines("\n"+lin)
+    file2.close()
+    with open("returnbook.txt") as fk:
+        a=fk.read()
+        print(a)
+    print("The book has been sucessfully returned!!")
+
+print("*****LIBRARY*****\n")
+while True:
+    c=int(input("Enter 1 to display the books available in the library:\nEnter 2 to add the books in the library:\nEnter 3 to issue a book from the library:\nEnter 4 to return books to the library:\nEnter 5 to exit the library:\n"))
+    if c==1:
+        display_books()
+    elif c==2:
+        add_book()
+    elif c==3:
+        issue_book()
+    elif c==4:
+        return_book()
+    elif c==5:
+        exit()
+    else:
+        print("kindly enter the given choices only!!!")
